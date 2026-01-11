@@ -1,35 +1,21 @@
-import React, { useState } from "react";
-import { createRoot } from "react-dom/client";
-
-import { ColorButton } from "./color-button";
-
-const colors = ["#EF4444", "#F59E0B", "#10B981", "#3B82F6", "#6366F1"];
-
-export default function App() {
-  const [color, setColor] = useState(colors[0]);
-
-  const handleSelectColor = (color) => {
-    // ここに選択された色をstateに反映するコードを書いてください
-    setColor(color);
-  };
-
-  return (
-    <div className="mt-10 flex flex-col items-center space-y-4 p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-800 max-w-md mx-auto">
-      <h2 className="text-xl font-semibold">Color Picker</h2>
-      <div className="w-16 h-16 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
-        <div
-          className="preview w-full h-full"
-          style={{ backgroundColor: color }}
-        />
-      </div>
-      <div className="flex space-x-2 mt-4">
-        {colors.map((color) => (
-          <ColorButton color={color} key={color} onSelect={handleSelectColor} />
-        ))}
-      </div>
+import React, { useEffect, useState } from "react"; import { createRoot } from
+"react-dom/client"; // 秒数を分:秒の形式に変換する関数 function secondsToMs(d) {
+const minutes = Math.floor(d / 60); const seconds = Math.floor(d % 60); return
+`${minutes.toString().padStart(2, "0")}:${seconds .toString() .padStart(2,
+"0")}`; } export default function App() { const [time, setTime] = useState(0);
+// 👇 ここでuseEffectを使って、タイマーを作成してください return (
+<div
+  className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900"
+>
+  <div
+    className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-10 w-[400px]"
+  >
+    <div
+      className="timer text-center text-6xl font-bold text-gray-900 dark:text-gray-100"
+    >
+      {secondsToMs(time)}
     </div>
-  );
-}
-
-export const root = createRoot(document.getElementById("root"));
+  </div>
+</div>
+); } export const root = createRoot(document.getElementById("root"));
 root.render(<App />);
